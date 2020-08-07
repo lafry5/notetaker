@@ -30,19 +30,25 @@ app.get('/notes', (req, res) => {
 // Create an array storage
 let results = [];
 
+
 function createNote(body) {
     var newNote = body;
-    // console.log(newNote + 'is newNote');
     db.push(newNote); // add new note into db
     // check the db is updating
     console.log(db); 
     fs.writeFileSync(path.join(__dirname, './db/db.json'), JSON.stringify(db)); // (path, data)
+    return db;
 }
 
-// function removeNote(note, id) {
+// function removeNote(find, db) {
 //     //take away the note with the selected id
-//     //return the 
+//    
 // }
+
+function findById(id, db) {         // This works!
+    const find = db.filter(db => db.id === id)[0];
+    return find;
+}
 
 // API Routes
 app.get('/api/notes', (req, res) => {
@@ -59,10 +65,17 @@ app.post('/api/notes', (req, res) => {
 
 // Bonus - Delete route
 app.delete('/api/notes/:id', (req, res) => {
-    const id = req.params._id;
-    const note = req.body;
-    // removeNote(note, id)
-     return res.json(db);
+    const find = findById(req.params.id, db);  // Find works!!!
+    if (find) {
+        res.json(find);
+    } else {
+        res.send(404);
+    }
+    console.log(req.params.id)
+    console.log(find)
+    console.log('This is the entry you chose to delete')  
+    
+    delete db[req.params.id];  
 });
 
 
