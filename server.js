@@ -5,6 +5,7 @@ const db = require('./db/db.json');
 const { fstat } = require('fs');
 const fs = require('fs');
 const { createContext } = require('vm');
+const { notStrictEqual } = require('assert');
 
 const app = express(); //instantiates the server
 const PORT = process.env.PORT || 3001;
@@ -31,11 +32,17 @@ let results = [];
 
 function createNote(body) {
     var newNote = body;
-    console.log(newNote);
-    results+=newNote; // add new note onto results
-    console.log(results); 
-    // fs.writeFileSync(path.join(__dirname, './db/db.json'), JSON.stringify(results)); // (path, data)
+    // console.log(newNote + 'is newNote');
+    db.push(newNote); // add new note into db
+    // check the db is updating
+    console.log(db); 
+    fs.writeFileSync(path.join(__dirname, './db/db.json'), JSON.stringify(db)); // (path, data)
 }
+
+// function removeNote(note, id) {
+//     //take away the note with the selected id
+//     //return the 
+// }
 
 // API Routes
 app.get('/api/notes', (req, res) => {
@@ -45,9 +52,19 @@ app.get('/api/notes', (req, res) => {
 });
 
 app.post('/api/notes', (req, res) => {
-    console.log(req.body);
     createNote(req.body);
+    // return the db after it has been updated
+    return res.json(db);
 });
+
+// Bonus - Delete route
+app.delete('/api/notes/:id', (req, res) => {
+    const id = req.params._id;
+    const note = req.body;
+    // removeNote(note, id)
+     return res.json(db);
+});
+
 
 // Listener
 // =============================================================
