@@ -6,6 +6,7 @@ const { fstat } = require('fs');
 const fs = require('fs');
 const { createContext } = require('vm');
 const { notStrictEqual } = require('assert');
+const { v4: uuidv4 } = require('uuid');
 
 const app = express(); //instantiates the server
 const PORT = process.env.PORT || 3001;
@@ -33,6 +34,10 @@ let results = [];
 
 function createNote(body) {
     var newNote = body;
+    // console.log(typeof body)
+    // console.log(newNote)
+    // console.log(uuidv4())
+    // newNote.id = uuidv4();
     db.push(newNote); // add new note into db
     // check the db is updating
     console.log(db); 
