@@ -45,10 +45,6 @@ function createNote(body) {
     return db;
 }
 
-// function removeNote(find, db) {
-//     //take away the note with the selected id
-//    
-// }
 
 function findById(id, db) {         // This works!
     const find = db.filter(db => db.id === id)[0];
