@@ -76,7 +76,7 @@ app.delete('/api/notes/:id', (req, res) => {
     console.log(find)
     console.log('This is the entry you chose to delete')  
     db.splice(req.params.id, 1)
-    console.log(db)
+    // console.log(db)
 });
 
 
