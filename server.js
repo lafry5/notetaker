@@ -72,11 +72,11 @@ app.delete('/api/notes/:id', (req, res) => {
     } else {
         res.send(404);
     }
-    console.log(req.params.id)
+    // console.log(req.params.id)
     console.log(find)
     console.log('This is the entry you chose to delete')  
-    
-    delete db[req.params.id];  
+    db.splice(req.params.id, 1)
+    console.log(db)
 });
 
 
